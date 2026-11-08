@@ -23,5 +23,3 @@ config.json
 # сессия для telegram не нужен
 session.session
 
-# Публичная конфигурация объектов opener
-!plugins/opener/config.json

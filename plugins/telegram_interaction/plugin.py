@@ -72,19 +72,19 @@ def send_telegram_message():
             vh.say("Библиотека для телеграм не установлена, сэр.")
             return
         
-        text = vh.query.get("norm_text", "")
+        text = vh.query.get("text", "")
         recipient, message = extract_recipient_and_message(text)
         
         if not recipient:
             vh.say("Кому написать, сэр?")
             vh.recognize_online()
-            text = vh.query.get("norm_text", "")
+            text = vh.query.get("text", "")
             recipient, message = extract_recipient_and_message(text)
         
         if not message:
             vh.say("Что написать, сэр?")
             vh.recognize_online()
-            text = vh.query.get("norm_text", "")
+            text = vh.query.get("text", "")
             _, message = extract_recipient_and_message(text)
         
         if not recipient or not message:

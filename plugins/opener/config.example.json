@@ -1,0 +1,58 @@
+
+{
+    "websites": {
+        "youtube": {
+            "url": "https://www.youtube.com",
+            "aliases": ["ютуб", "youtube", "ютюб"]
+        },
+        "google": {
+            "url": "https://www.google.com",
+            "aliases": ["гугл", "google"]
+        },
+        "yandex": {
+            "url": "https://www.yandex.ru",
+            "aliases": ["яндекс", "yandex"]
+        },
+        "telegram": {
+            "url": "https://web.telegram.org/k/",
+            "aliases": ["телеграм", "телеграмм", "telegram"]
+        }
+    },
+    "programs": {
+        "notepad": {
+            "exe": "notepad.exe",
+            "aliases": ["блокнот", "notepad"],
+            "process": "notepad.exe"
+        },
+        "calculator": {
+            "exe": "CalculatorApp.exe",
+            "aliases": ["калькулятор", "calculator"],
+            "process": "CalculatorApp.exe"
+        },
+        "explorer": {
+            "exe": "explorer.exe",
+            "aliases": ["проводник", "explorer"],
+            "process": "explorer.exe"
+        },
+        "cmd": {
+            "exe": "cmd.exe",
+            "aliases": ["командная строка", "командную строку", "cmd"],
+            "process": "cmd.exe"
+        },
+        "vpn": {
+            "exe": "C:/Program Files/FlyFrogLLC/Happ/Happ.exe",
+            "aliases": ["впн", "vpn", "хапп", "happ"],
+            "process": "Happ.exe"
+        },
+        "obsidian": {
+            "exe": "C:/Program Files/Obsidian/Obsidian.exe",
+            "aliases": ["обсидиан", "obsidian"],
+            "process": "Obsidian.exe"
+        },
+        "zoom": {
+            "exe": "C:/Users/bek01/AppData/Roaming/Zoom/bin/Zoom.exe",
+            "aliases": ["зум", "zoom"],
+            "process": "Zoom.exe"
+        }
+    }
+}
