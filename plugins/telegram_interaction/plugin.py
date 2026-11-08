@@ -4,12 +4,18 @@ import logging
 import asyncio
 from core import vh
 
+
+plugin_dir = os.path.dirname(os.path.abspath(__file__))
+intents_path = os.path.join(plugin_dir, "intents.json")
+
+with open(intents_path, "r", encoding="utf-8") as file:
+    intents = json.load(file)
+
 try:
     from telethon import TelegramClient
 except ImportError:
     TelegramClient = None
 
-plugin_dir = os.path.dirname(os.path.abspath(__file__))
 config_path = os.path.join(plugin_dir, "config.json")
 log_path = os.path.join(plugin_dir, "error.log")
 session_path = os.path.join(plugin_dir, "session")
@@ -123,21 +129,7 @@ def send_telegram_message():
         logging.error(f"send_telegram_message error: {e}")
         vh.say("Не удалось отправить сообщение, сэр.")
 
-intents = {
-    "send_telegram": {
-        "examples": [
-            "напиши что я дома",
-            "сообщи родителям что",
-            "напиши в группу что",
-            "написать что я дом",
-            "сообщить родитель что",
-            "написать в группа что",
-        ],
-        "responses": [
-            "пишу",
-            "отправляю",
-            "сообщаю"
-        ],
-        "cmd": send_telegram_message
-    }
-}
+cmds = [send_telegram_message]
+
+for intent, cmd in zip(intents, cmds):
+    intents[intent]["cmd"] = cmd

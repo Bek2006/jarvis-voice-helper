@@ -1,7 +1,15 @@
+import json
 # plugins/shutdown/plugin.py
 
 import os
 from core import vh
+
+
+plugin_dir = os.path.dirname(os.path.abspath(__file__))
+intents_path = os.path.join(plugin_dir, "intents.json")
+
+with open(intents_path, "r", encoding="utf-8") as file:
+    intents = json.load(file)
 
 
 POSITIVE_WORDS = {
@@ -47,20 +55,7 @@ def shutdown_command():
         ])
 
 
-intents = {
-    "shutdown": {
-        "examples": [
-            "выключи компьютер",
-            "выключить компьютер",
-            "выключи компьютер пожалуйста",
-            "завершить работу компьютера",
-            "завершение работы компьютера",
-            "компьютер выключить",
-        ],
-        "responses": [
-            "выключаю компьютер",
-            "выключение компьютера",
-        ],
-        "cmd": shutdown_command,
-    }
-}
+cmds = [shutdown_command]
+
+for intent, cmd in zip(intents, cmds):
+    intents[intent]["cmd"] = cmd

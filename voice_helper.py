@@ -335,6 +335,28 @@ class VoiceHelper:
 
     # ----- Intents-Loader ----- #
 
+    def lemmatize_intents(self) -> None:
+        """Лемматизирует, удаляет дубликаты и сортирует примеры в JSON плагинов."""
+        for plugin_dir in sorted(Path(self.plugins_path).iterdir()):
+            if not plugin_dir.is_dir():
+                continue
+
+            intents_path = plugin_dir / "intents.json"
+            if not intents_path.is_file():
+                continue
+
+            with intents_path.open("r", encoding="utf-8") as file:
+                intents = json.load(file)
+
+            for intent in intents.values():
+                intent["examples"] = sorted({
+                    self.lemmatize(example) for example in intent["examples"]
+                })
+
+            with intents_path.open("w", encoding="utf-8") as file:
+                json.dump(intents, file, ensure_ascii=False, indent=2)
+                file.write("\n")
+
     def load_intents(self) -> None:
         for plugin_folder in os.listdir(self.plugins_path):
             if plugin_folder in {"demo_plugin", "__pycache__", "__init__.py"}:

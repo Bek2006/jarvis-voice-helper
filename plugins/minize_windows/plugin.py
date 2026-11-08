@@ -1,4 +1,13 @@
+import os
+import json
 from core import vh
+
+
+plugin_dir = os.path.dirname(os.path.abspath(__file__))
+intents_path = os.path.join(plugin_dir, "intents.json")
+
+with open(intents_path, "r", encoding="utf-8") as file:
+    intents = json.load(file)
 
 import keyboard
 
@@ -8,21 +17,7 @@ def minimize_windows():
     keyboard.send("win+d")
 
 
-intents = {
-    "minimize_windows": {
-        "examples": [
-            "сверни все окна",
-            "свернуть все окно",
-            "свернуть окна",
-            "сверни окна"
-        ],
-        "responses": [
-            "хорошо",
-            "хорошо, сэр",
-            "сворачиваю все окна",
-            "сворачиваю все окна, сэр",
-            "сворачиваю окна"
-            "сворачиваю окна, сэр"],
-        "cmd": minimize_windows
-    }
-}
+cmds = [minimize_windows]
+
+for intent, cmd in zip(intents, cmds):
+    intents[intent]["cmd"] = cmd

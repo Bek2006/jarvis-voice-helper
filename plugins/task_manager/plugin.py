@@ -1,3 +1,4 @@
+import json
 import os
 import time
 import logging
@@ -5,6 +6,13 @@ import schedule
 import threading
 from datetime import datetime
 from core import vh
+
+
+plugin_dir = os.path.dirname(os.path.abspath(__file__))
+intents_path = os.path.join(plugin_dir, "intents.json")
+
+with open(intents_path, "r", encoding="utf-8") as file:
+    intents = json.load(file)
 
 # Логирование
 log_dir = os.path.dirname(os.path.abspath(__file__))
@@ -216,18 +224,13 @@ def shutdown():
         logger.error(f"Ошибка при завершении планировщика: {e}")
 
 
-intents = {
-    "activate_task_manager": {
-        "examples": [
-            "активируй планировщик задач",
-            "активируй планировщик",
-            "включи планировщик"
-        ],
-        "responses": [
-            "планировщик задач активирован, сэр",
-            "планировщик запущен, сэр"
-        ],
-        "cmd": run_task_manager,
-        "shutdown": shutdown
-    }
-}
+cmds = [run_task_manager]
+
+for intent, cmd in zip(intents, cmds):
+    intents[intent]["cmd"] = cmd
+
+
+shutdowns = [shutdown]
+
+for intent, shut in zip(intents, shutdowns):
+    intents[intent]["shutdown"] = shut

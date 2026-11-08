@@ -1,7 +1,16 @@
+import os
+import json
 # plugins/weekday/plugin.py
 
 import datetime
 from core import vh
+
+
+plugin_dir = os.path.dirname(os.path.abspath(__file__))
+intents_path = os.path.join(plugin_dir, "intents.json")
+
+with open(intents_path, "r", encoding="utf-8") as file:
+    intents = json.load(file)
 
 
 WEEKDAYS = [
@@ -28,20 +37,7 @@ def weekday_command():
     vh.say_random(phrases)
 
 
-intents = {
-    "weekday": {
-        "examples": [
-            "какой сегодня день недели",
-            "какой день недели",
-            "какой сегодня день",
-            "сегодняшний день недели",
-            "назови день недели",
-            "скажи день недели",
-        ],
-        "responses": [
-            "сегодня день недели",
-            "день недели",
-        ],
-        "cmd": weekday_command,
-    }
-}
+cmds = [weekday_command]
+
+for intent, cmd in zip(intents, cmds):
+    intents[intent]["cmd"] = cmd

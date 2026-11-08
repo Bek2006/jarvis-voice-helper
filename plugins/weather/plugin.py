@@ -8,6 +8,13 @@ from datetime import datetime
 from core import vh
 
 
+plugin_dir = os.path.dirname(os.path.abspath(__file__))
+intents_path = os.path.join(plugin_dir, "intents.json")
+
+with open(intents_path, "r", encoding="utf-8") as file:
+    intents = json.load(file)
+
+
 try:
     import requests
 except ImportError:
@@ -367,23 +374,7 @@ def weather_command():
         ])
 
 
-intents = {
-    "weather": {
-        "examples": [
-            "какая погода",
-            "погода сегодня",
-            "погода сейчас",
-            "какая погода в москве",
-            "погода в санкт-петербурге",
-            "скажи погоду",
-            "узнай погоду",
-            "подскажи погоду",
-            "текущая погода",
-        ],
-        "responses": [
-            "узнаю погоду",
-            "проверяю погоду",
-        ],
-        "cmd": weather_command,
-    }
-}
+cmds = [weather_command]
+
+for intent, cmd in zip(intents, cmds):
+    intents[intent]["cmd"] = cmd

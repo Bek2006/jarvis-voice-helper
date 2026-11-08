@@ -1,8 +1,17 @@
+import os
+import json
 # plugins/timer/plugin.py
 
 import re
 import threading
 from core import vh
+
+
+plugin_dir = os.path.dirname(os.path.abspath(__file__))
+intents_path = os.path.join(plugin_dir, "intents.json")
+
+with open(intents_path, "r", encoding="utf-8") as file:
+    intents = json.load(file)
 
 
 WORD_NUMBERS = {
@@ -118,22 +127,7 @@ def timer_command():
     ])
 
 
-intents = {
-    "timer": {
-        "examples": [
-            "таймер",
-            "установить таймер",
-            "установи таймер",
-            "включить таймер",
-            "включи таймер",
-            "завести таймер",
-            "таймер на пять минут",
-            "таймер на одну минуту",
-        ],
-        "responses": [
-            "таймер установлен",
-            "таймер запущен",
-        ],
-        "cmd": timer_command,
-    }
-}
+cmds = [timer_command]
+
+for intent, cmd in zip(intents, cmds):
+    intents[intent]["cmd"] = cmd

@@ -1,7 +1,16 @@
+import os
+import json
 # plugins/current_time/plugin.py
 
 import datetime
 from core import vh
+
+
+plugin_dir = os.path.dirname(os.path.abspath(__file__))
+intents_path = os.path.join(plugin_dir, "intents.json")
+
+with open(intents_path, "r", encoding="utf-8") as file:
+    intents = json.load(file)
 
 
 # Словарь чисел:
@@ -115,23 +124,7 @@ def current_time():
     vh.say_random(phrases)
 
 
-intents = {
-    "current_time": {
-        "examples": [
-            "сколько сейчас времени",
-            "сколько сейчас время",
-            "который час",
-            "скажи время",
-            "сказать время",
-            "подскажи время",
-            "подсказать время",
-            "текущее время",
-        ],
-        "responses": [
-            "сейчас часы часов минуты минут",
-            "сейчас часы минуты",
-            "часы минуты",
-        ],
-        "cmd": current_time,
-    }
-}
+cmds = [current_time]
+
+for intent, cmd in zip(intents, cmds):
+    intents[intent]["cmd"] = cmd
