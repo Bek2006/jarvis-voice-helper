@@ -1,0 +1,24 @@
+# pycache не нужен
+__pycache__
+
+# PROJECT_STATUS.md не нужен
+PROJECT_STATUS.md
+
+# Модель синтеза речи не загружаем
+silero_tts_model/*
+!silero_tts_model/.gitkeep
+
+# Модель распознавания речи не загружаем
+vosk_small_ru_model/*
+!vosk_small_ru_model/.gitkeep
+
+# Исключим готовые файлы с фразами
+sounds/*
+!sounds/.gitkeep
+
+# конфиги и логи не нужны
+config.json
+*.log
+
+# сессия для telegram не нужен
+session.session

@@ -1,0 +1,8 @@
+{
+    "intent_name": {
+        "examples": [],
+        "responses": [],
+        "cmd": "f",
+        "shurdown": "shutdown"
+    }
+}
