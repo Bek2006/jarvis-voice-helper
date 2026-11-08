@@ -1,10 +1,17 @@
+import json
 import os
 import sys
 import importlib
 import logging
 from core import vh
 
+
 plugin_dir = os.path.dirname(os.path.abspath(__file__))
+intents_path = os.path.join(plugin_dir, "intents.json")
+
+with open(intents_path, "r", encoding="utf-8") as file:
+    intents = json.load(file)
+
 log_path = os.path.join(plugin_dir, "error.log")
 
 logging.basicConfig(
@@ -54,24 +61,7 @@ def restart_plugin():
         vh.say("Не удалось перезагрузить плагин, сэр.")
 
 
-intents = {
-    "restart_plugin": {
-        "examples": [
-            "перезагрузи плагин",
-            "перезапусти плагин",
-            "обнови плагин",
-            "перезагрузить плагин",
-            "перезапустить плагин",
-            "обновить плагин",
-            "рестарт плагина",
-            "перезагрузи модуль",
-            "перезапусти модуль"
-        ],
-        "responses": [
-            "перезагружаю",
-            "перезапускаю",
-            "обновляю"
-        ],
-        "cmd": restart_plugin
-    }
-}
+cmds = [restart_plugin]
+
+for intent, cmd in zip(intents, cmds):
+    intents[intent]["cmd"] = cmd

@@ -1,6 +1,14 @@
+import json
 import os
 import sys
 from core import vh
+
+
+plugin_dir = os.path.dirname(os.path.abspath(__file__))
+intents_path = os.path.join(plugin_dir, "intents.json")
+
+with open(intents_path, "r", encoding="utf-8") as file:
+    intents = json.load(file)
 
 
 LOCK_SCREEN_RESPOMSES = [
@@ -55,16 +63,7 @@ def lock_screen():
         vh.say("Блокировка экрана не поддерживается")
 
 
-intents = {
-    "lock_screen": {
-        "examples": [
-            "заблокируй экран",
-            "заблокировать экран",
-            "блокировка экрана",
-            "экран блокировки",
-            "заблокируй экран компьютера",
-        ],
-        "responses": LOCK_SCREEN_RESPOMSES,
-        "cmd": lock_screen,
-    }
-}
+cmds = [lock_screen]
+
+for intent, cmd in zip(intents, cmds):
+    intents[intent]["cmd"] = cmd

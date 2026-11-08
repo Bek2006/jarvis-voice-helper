@@ -3,6 +3,13 @@ import json
 import logging
 from core import vh
 
+
+plugin_dir = os.path.dirname(os.path.abspath(__file__))
+intents_path = os.path.join(plugin_dir, "intents.json")
+
+with open(intents_path, "r", encoding="utf-8") as file:
+    intents = json.load(file)
+
 try:
     import tinytuya
     import requests
@@ -10,7 +17,6 @@ except ImportError:
     tinytuya = None
     requests = None
 
-plugin_dir = os.path.dirname(os.path.abspath(__file__))
 config_path = os.path.join(plugin_dir, "config.json")
 log_path = os.path.join(plugin_dir, "error.log")
 
@@ -85,18 +91,7 @@ def control_night_light():
         vh.say("Не удалось управлять ночником, сэр.")
 
 
-intents = {
-    "control_night_light": {
-        "examples": [
-            "включи ночник",
-            "включить ночник",
-            "выключи ночник",
-            "выключить ночник"
-        ],
-        "responses": [
-            "включил, сэр",
-            "выключил, сэр"
-        ],
-        "cmd": control_night_light
-    }
-}
+cmds = [control_night_light]
+
+for intent, cmd in zip(intents, cmds):
+    intents[intent]["cmd"] = cmd

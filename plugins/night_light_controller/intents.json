@@ -1,0 +1,13 @@
+{
+  "control_night_light": {
+    "examples": [
+      "включить ночник",
+      "выключить ночник"
+    ],
+    "responses": [
+      "включил, сэр",
+      "выключил, сэр"
+    ],
+    "cmd": "control_night_light"
+  }
+}

@@ -5,6 +5,13 @@ import subprocess
 import logging
 from core import vh
 
+
+plugin_dir = os.path.dirname(os.path.abspath(__file__))
+intents_path = os.path.join(plugin_dir, "intents.json")
+
+with open(intents_path, "r", encoding="utf-8") as file:
+    intents = json.load(file)
+
 try:
     from num2words import num2words
     def number_to_words(num):
@@ -13,7 +20,6 @@ except ImportError:
     def number_to_words(num):
         return str(num)
 
-plugin_dir = os.path.dirname(os.path.abspath(__file__))
 config_path = os.path.join(plugin_dir, "config.json")
 log_path = os.path.join(plugin_dir, "error.log")
 
@@ -175,32 +181,7 @@ def touch_app():
         vh.say("Произошла ошибка, сэр.")
 
 
-intents = {
-    "touch_app": {
-        "examples": [
-            "открой ютуб",
-            "закрыть ютуб",
-            "запусти блокнот",
-            "открой сайт гугл",
-            "открыть калькулятор",
-            "закрыть калькулятор",
-            "закрой программу калькулятор",
-            "закрой блокнот",
-            "открыть командная строка",
-            "открыть командную строку",
-            "закрой командную строку",
-            "закрыть командная строка",
-            "открой проводник",
-            "открыть проводник",
-            "закрыть проводник",
-            "открыть telegram",
-            "закрыть telegram"
-        ],
-        "responses": [
-            "открываю",
-            "запускаю",
-            "закрываю"
-        ],
-        "cmd": touch_app
-    }
-}
+cmds = [touch_app]
+
+for intent, cmd in zip(intents, cmds):
+    intents[intent]["cmd"] = cmd

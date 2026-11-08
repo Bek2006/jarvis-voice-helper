@@ -5,12 +5,18 @@ import subprocess
 import time
 from core import vh
 
+
+plugin_dir = os.path.dirname(os.path.abspath(__file__))
+intents_path = os.path.join(plugin_dir, "intents.json")
+
+with open(intents_path, "r", encoding="utf-8") as file:
+    intents = json.load(file)
+
 try:
     import pyautogui
 except ImportError:
     pyautogui = None
 
-plugin_dir = os.path.dirname(os.path.abspath(__file__))
 config_path = os.path.join(plugin_dir, "config.json")
 log_path = os.path.join(plugin_dir, "error.log")
 
@@ -107,22 +113,7 @@ def toggle_vpn():
         logging.error(f"toggle_vpn error: {e}")
         vh.say("Произошла ошибка при управлении випиэна, сэр.")
 
-intents = {
-    "toggle_vpn": {
-        "examples": [
-            "включи впн",
-            "выключи впн",
-            "включи vpn",
-            "выключи vpn",
-            "активируй впн",
-            "деактивируй vpn"
-        ],
-        "responses": [
-            "включаю",
-            "выключаю",
-            "активирую",
-            "деактивирую"
-        ],
-        "cmd": toggle_vpn
-    }
-}
+cmds = [toggle_vpn]
+
+for intent, cmd in zip(intents, cmds):
+    intents[intent]["cmd"] = cmd
